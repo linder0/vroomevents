@@ -2,17 +2,14 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 
-const videos = [
-  "/videos/hero.mp4",
-  "/events/blueprint/cover.mp4",
-  "/events/blueprint/1.mp4",
-  "/events/blueprint/2.mp4",
-  "/videos/blueprinttableshot.mov",
-];
-
 const FADE_MS = 1000;
+const FADE_SETTLE_MS = FADE_MS + 200;
 
-export default function HeroVideoLoop() {
+interface HeroVideoLoopProps {
+  videos: string[];
+}
+
+export default function HeroVideoLoop({ videos }: HeroVideoLoopProps) {
   const topRef = useRef<HTMLVideoElement>(null);
   const bottomRef = useRef<HTMLVideoElement>(null);
   const [topSrc, setTopSrc] = useState(videos[0]);
@@ -20,6 +17,8 @@ export default function HeroVideoLoop() {
   const indexRef = useRef(0);
   const [showTop, setShowTop] = useState(true);
   const busy = useRef(false);
+  const showTopRef = useRef(showTop);
+  showTopRef.current = showTop;
 
   const crossfade = useCallback(() => {
     if (busy.current) return;
@@ -27,23 +26,24 @@ export default function HeroVideoLoop() {
 
     const next = (indexRef.current + 1) % videos.length;
     const prep = (next + 1) % videos.length;
-    const incoming = showTop ? bottomRef : topRef;
+    const incoming = showTopRef.current ? bottomRef : topRef;
 
     incoming.current!.currentTime = 0;
     incoming.current?.play().catch(() => {});
 
+    const wasShowingTop = showTopRef.current;
     setShowTop((prev) => !prev);
     indexRef.current = next;
 
     setTimeout(() => {
-      if (showTop) {
+      if (wasShowingTop) {
         setTopSrc(videos[prep]);
       } else {
         setBottomSrc(videos[prep]);
       }
       busy.current = false;
-    }, FADE_MS + 200);
-  }, [showTop]);
+    }, FADE_SETTLE_MS);
+  }, [videos]);
 
   useEffect(() => {
     const active = showTop ? topRef.current : bottomRef.current;

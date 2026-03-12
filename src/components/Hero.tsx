@@ -1,11 +1,19 @@
 import SocialLinks from "./SocialLinks";
 import VroomLogo from "./VroomLogo";
 import HeroVideoLoop from "./HeroVideoLoop";
+import { events } from "@/lib/events";
+
+const heroVideos = [
+  "/videos/hero.mp4",
+  ...events
+    .filter((e) => e.coverVideo)
+    .map((e) => e.coverVideo!),
+];
 
 export default function Hero() {
   return (
     <section className="relative flex h-dvh items-center justify-center overflow-hidden bg-black">
-      <HeroVideoLoop />
+      <HeroVideoLoop videos={heroVideos} />
 
       <div className="absolute inset-0 z-[1] bg-black/50" />
 

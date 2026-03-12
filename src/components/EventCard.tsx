@@ -3,8 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
-import { formatDate } from "@/lib/events";
 import type { VroomEvent } from "@/lib/events";
+import EventMeta from "./EventMeta";
 
 interface EventCardProps {
   event: VroomEvent;
@@ -67,9 +67,7 @@ export default function EventCard({ event }: EventCardProps) {
             <h3 className="text-3xl font-black uppercase leading-none tracking-wide text-white sm:text-4xl">
               {event.title}
             </h3>
-            <time className="mt-2 block text-sm font-medium text-white/80">
-              {formatDate(event.date)}
-            </time>
+            <EventMeta event={event} variant="card" />
           </div>
         </div>
       </article>

@@ -59,7 +59,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission */}
-      <section className="border-t border-neutral-800">
+      <section>
         <div className="mx-auto max-w-7xl px-6 py-24">
           <div className="grid gap-12 lg:grid-cols-3 lg:gap-16">
             {missionPillars.map((item) => (
@@ -77,7 +77,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="border-t border-neutral-800">
+      <section>
         <div className="mx-auto max-w-7xl px-6 py-24">
           <h2 className="text-3xl font-bold uppercase tracking-tight text-white sm:text-4xl">
             The Team
@@ -91,7 +91,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="border-t border-neutral-800 py-24">
+      <section className="py-24">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 text-center">
           <h2 className="text-3xl font-bold uppercase tracking-tight text-white sm:text-4xl">
             See what we&apos;ve been up to
